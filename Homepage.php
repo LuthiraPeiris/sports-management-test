@@ -632,23 +632,23 @@
     }
 
     function gotoBookings() {
-      window.location.href = "Booking.html";
+      window.location.href = "Booking.php";
     }
     function gotoRegister() {
-      window.location.href = "Register.html";
+      window.location.href = "Register.php";
     }
     function gotoLogin() {
-      window.location.href = "Login.html";
+      window.location.href = "Login.php";
     }
 
     // Pages in the Sports categories
     function gotoPage(sport){
-      window.location.href = `Sports/${sport}.html`;
+      window.location.href = `Sports/${sport}.php`;
     }
 
     // Pages in the Sports events
     function gotoPageEvent(eventId){
-      window.location.href = `Events/${eventId}.html`;
+      window.location.href = `Events/${eventId}.php`;
     }
 
     // About page countup
