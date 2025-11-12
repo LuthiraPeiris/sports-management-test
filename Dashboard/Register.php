@@ -1,3 +1,72 @@
+<?php
+include 'db.php';
+
+if (isset($_POST['register'])) {
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = $_POST['role'];
+    $sport_id = intval($_POST['sport_id']);
+
+    if ($role == 'student') {
+        $student_id = $_POST['studentID'];
+        $nic = $_POST['studentNIC'];
+        $coach_id = NULL;
+    } else {
+        $coach_id = $_POST['coachID'];
+        $nic = $_POST['coachNIC'];
+        $student_id = NULL;
+    }
+
+    // ✅ Insert into users table
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password, role, nic, sport_id, student_id, coach_id) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssiis", $name, $email, $password, $role, $nic, $sport_id, $student_id, $coach_id);
+
+    if ($stmt->execute()) {
+
+        $user_id = $conn->insert_id; // ✅ newly created user id
+
+        if ($role == 'student') {
+
+            // ✅ Insert Student
+            $stmt2 = $conn->prepare("INSERT INTO student (user_id, name, nic, sport_id, student_id) 
+                                     VALUES (?, ?, ?, ?, ?)");
+            $stmt2->bind_param("issis", $user_id, $name, $nic, $sport_id, $student_id);
+            $stmt2->execute();
+            $stmt2->close();
+
+        } else {
+
+            // ✅ Insert Coach
+            $stmt3 = $conn->prepare("INSERT INTO coach (user_id, name, nic, sport_id, coach_id) 
+                                     VALUES (?, ?, ?, ?, ?)");
+            $stmt3->bind_param("issis", $user_id, $name, $nic, $sport_id, $coach_id);
+            $stmt3->execute();
+            $stmt3->close();
+
+            // ✅ Assign Coach to Sport (using user_id as coach reference)
+            $assign = $conn->prepare("INSERT INTO sport_coach (sport_id, coach_id) VALUES (?, ?)");
+            $assign->bind_param("ii", $sport_id, $user_id);
+            $assign->execute();
+            $assign->close();
+        }
+
+        echo "<script>alert('Registration Successful!'); window.location='login.php';</script>";
+    } else {
+        echo "<script>alert('Registration Failed: " . $stmt->error . "');</script>";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +85,7 @@
 </head>
 
 <body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; margin-top:40px; margin-bottom:40px;">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-sm p-4 w-100 rounded-4" style="max-width: 500px;">
             <h2 class="text-center mb-4 fw-bold" style="color:#2969a5;" id="formTitle">Student's Registration Form</h2>
 
@@ -73,29 +142,15 @@
 
                 <div class="mb-3">
                     <label class="form-label">Sport:</label>
-                    <select name="sport" class="form-control" required>
+                    <select name="sport_id" class="form-control" required>
                         <option value="" disabled selected>Select Sport</option>
-                        <option value="football">Football</option>
-                        <option value="cricket">Cricket</option>
-                        <option value="basketball">Basketball</option>
-                        <option value="tennis">Tennis</option>
-                        <option value="Baseball">Baseball</option>
-                        <option value="hockey">Hockey</option>
-                        <option value="swimming">Swimming</option>
-                        <option value="badminton">Badminton</option>
-                        <option value="elle">Elle</option>
-                        <option value="rugby">Rugby</option>
-                        <option value="table tennis">Table Tennis</option>
-                        <option value="carrom">Carrom</option>
-                        <option value="chess">Chess</option>
-                        <option value="karate">Karate</option>
-                        <option value="taekwondo">Taekwondo</option>
-                        <option value="netball">Netball</option>
-                        <option value="road race">Road Race</option>
-                        <option value="volleyball">Volleyball</option>
-                        <option value="weight lifting">Weight Lifting</option>
-                        <option value="wrestling">Wrestling</option>
-                        <option value="athletics">Athletics</option>
+                        <?php
+                        include 'db.php';
+                        $sports = $conn->query("SELECT sport_id, name FROM sports ORDER BY name ASC");
+                        while ($row = $sports->fetch_assoc()) {
+                            echo "<option value='{$row['sport_id']}'>{$row['name']}</option>";
+                        }
+                        ?>
                     </select>
                 </div>
 

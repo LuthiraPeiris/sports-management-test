@@ -635,10 +635,10 @@
       window.location.href = "Booking.php";
     }
     function gotoRegister() {
-      window.location.href = "Register.php";
+      window.location.href = "Dashboard/Register.php";
     }
     function gotoLogin() {
-      window.location.href = "Login.php";
+      window.location.href = "Dashboard/Login.php";
     }
 
     // Pages in the Sports categories
