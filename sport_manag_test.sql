@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2025 at 02:13 PM
+-- Generation Time: Nov 15, 2025 at 01:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -173,7 +173,8 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`id`, `user_id`, `name`, `nic`, `sport_id`, `student_id`, `created_at`) VALUES
 (3, 11, 'Luthira', '5678', 15, '5678', '2025-11-07'),
-(4, 13, 'Malith', '0987', 17, '0987', '2025-11-09');
+(4, 13, 'Malith', '0987', 17, '0987', '2025-11-09'),
+(5, 14, 'Jagath', '98765', 13, '98765', '2025-11-13');
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,8 @@ CREATE TABLE `student_sport_registration` (
 --
 
 INSERT INTO `student_sport_registration` (`id`, `user_id`, `sport_id`, `coach_id`, `registered_at`) VALUES
-(3, 13, 20, 10, '2025-11-12 14:00:51');
+(3, 13, 20, 10, '2025-11-12 14:00:51'),
+(4, 14, 17, 12, '2025-11-13 17:41:59');
 
 -- --------------------------------------------------------
 
@@ -245,7 +247,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `nic`, `sport_id
 (10, 'Sanka', 'sanka@gmail.com', '$2y$10$X.yplUFYhN.70clYmve6ceWewc5MSbUCYEeWdbgAzZPJjk1YcIj1C', 'coach', '4321', 20, NULL, '4321', '2025-11-06 18:03:57'),
 (11, 'Luthira', 'luthi@gmail.com', '$2y$10$YnyGJnSHEH6/dXTK2/qHJ.FXjMgCnLhfZ7HTSzPvm431zrXFKRKWq', 'student', '5678', 15, '5678', NULL, '2025-11-07 12:59:06'),
 (12, 'Githmi', 'githmi@gmail.com', '$2y$10$rrPdXFLCTjXKqwxE7cHmnu0Z6b.U.fyy3DJMOIhjIM/Vi1nEmLwHi', 'coach', '1234', 17, NULL, '1234', '2025-11-07 13:07:18'),
-(13, 'Malith', 'malith@gmail.com', '$2y$10$W0CTtqVwG8EQ.Cfkk1xVm.B78I2DiK7zQS5QVwp31Eh0w/PXU.vKa', 'student', '0987', 17, '987', NULL, '2025-11-09 07:42:40');
+(13, 'Malith', 'malith@gmail.com', '$2y$10$W0CTtqVwG8EQ.Cfkk1xVm.B78I2DiK7zQS5QVwp31Eh0w/PXU.vKa', 'student', '0987', 17, '987', NULL, '2025-11-09 07:42:40'),
+(14, 'Jagath', 'jagath@gmail.com', '$2y$10$nvplo0tzOvGM3K1W20MkVuEFEg5y2/Lw.Wo1wl.4L3uf.l4QMjJLu', 'student', '98765', 13, '98765', NULL, '2025-11-13 12:08:20');
 
 --
 -- Indexes for dumped tables
@@ -356,7 +359,7 @@ ALTER TABLE `sport_coach`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `student_sport`
@@ -368,13 +371,13 @@ ALTER TABLE `student_sport`
 -- AUTO_INCREMENT for table `student_sport_registration`
 --
 ALTER TABLE `student_sport_registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

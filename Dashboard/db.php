@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "sport_management";
+$database = "sport_manag_test";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
